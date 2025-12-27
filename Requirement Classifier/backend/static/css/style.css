@@ -1,0 +1,561 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.3s ease;
+  scroll-behavior: smooth;
+  color: #f0f0f0;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.flash-messages {
+  color: #ffcc00;
+  background-color: #003366;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 10px auto;
+  width: 80%;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Body & Background */
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #001f3f, #003366, #001a4d);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Starry background animation */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: radial-gradient(white 1px, transparent 1px);
+  background-size: 20px 20px;
+  animation: starMove 60s linear infinite;
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes starMove {
+  from { background-position: 0 0; }
+  to { background-position: 1000px 1000px; }
+}
+
+/* Navbar */
+nav {
+  width: 100%;
+  max-width: 900px;
+  background: #32b0eb; /* deep midnight purple */
+  padding: 12px 24px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px #3c2a6a; /* subtle purple glow */
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: saturate(180%) blur(12px);
+}
+
+nav a {
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #094b5c; /* lighter purple for links */
+  padding: 8px 16px;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.04em;
+}
+
+nav a:hover,
+nav a:focus {
+  color: #32b0eb;
+  background: rgba(0, 38, 77, 0.8);/* brighter purple on hover */
+  box-shadow: 0 0 12px #7c6bff;
+  transform: translateY(-3px);
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 20px 10px;
+    margin-top: 20px;
+}
+
+.history-table th, .history-table td {
+    padding: 12px 16px;
+    text-align: left;
+}
+
+.history-table th {
+    background-color: #32b0eb;
+    color: white;
+    border-radius: 50px;
+}
+
+.history-table tr:nth-child(even) {
+    background-color: rgba(0, 38, 77, 0.8);
+}
+
+.history-table tr:hover {
+    background-color: #0a3472;
+    color: rgba(0, 38, 77, 0.8);
+    transition: background-color 0.3s;
+}
+
+/* Container */
+.container {
+  margin-top: 40px;
+  max-width: 900px;
+  width: 100%;
+  background: rgba(0, 38, 77, 0.8);
+  padding: 40px 30px;
+  border: solid #32b0eb;
+  border-radius: 14px;
+  box-shadow: 0 0 30px #00264d;
+  text-align: center;
+  z-index: 5;
+  position: relative;
+}
+
+/* Headings */
+h1, h2, h3 {
+  color: #a3c1ff;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px #003366;
+  user-select: text;
+}
+
+/* Form */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  color: #001f3f;
+  background-color: #a3c1ff;
+  box-shadow: inset 2px 2px 8px #7892c3;
+  resize: vertical;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+  outline: none;
+  background-color: #c4d4ff;
+  box-shadow: 0 0 10px #4a7ed8;
+}
+
+/* Button */
+button,
+input[type="submit"] {
+  cursor: pointer;
+  background: linear-gradient(45deg, #004080, #1e3f70);
+  border: none;
+  padding: 14px 40px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #cce4ff;
+  box-shadow: 0 0 10px #003366;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  transition: all 0.4s ease;
+}
+
+button::before,
+input[type="submit"]::before {
+  /* content: '⭐'; */
+  position: absolute;
+  top: 50%;
+  left: -30px;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  opacity: 0;
+  animation: starSlide 2.5s ease-in-out infinite;
+  color: #99ccff;
+}
+
+button:hover,
+input[type="submit"]:hover {
+  background: linear-gradient(45deg, #1e3f70, #004080);
+  box-shadow: 0 0 20px #99ccff;
+  transform: scale(1.05);
+  color: white;
+}
+
+button:hover::before,
+input[type="submit"]:hover::before {
+  opacity: 1;
+  left: 10px;
+}
+
+@keyframes starSlide {
+  0%, 100% {
+    left: -30px;
+    opacity: 0;
+  }
+  50% {
+    left: 50%;
+    opacity: 1;
+  }
+}
+
+/* Textarea resize handle fix */
+textarea {
+  min-height: 100px;
+}
+
+/* Make the body take full height and set up layout */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Main content grows to push footer down */
+body > .container {
+    flex: 1;
+}
+
+/* Stylish footer */
+.footer {
+    width: 100%; /* Ensures full width */
+    background-color: #001f3f; /* Dark navy background */
+    color: #bac2c9a6;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 1s ease;
+    margin-top:50px;
+    position: relative;
+    left: 0;
+    right: 0;
+}
+
+.footer strong {
+    color: #32b0eb;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    max-width: 100%;
+  }
+
+  button,
+  input[type="submit"] {
+    width: 100%;
+    padding: 14px 0;
+  }
+}
+
+.flash {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.flash.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+.flash.danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animated-text {
+  animation: fadeInUp 1.5s ease forwards;
+  opacity: 0;
+}
+
+/* ========== NEW: Popup Table Styling - consistent with your theme ========== */
+.popup-table {
+    display: none;
+    position: fixed;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    max-height: 70%;
+    background: #001f3f; /* dark navy */
+    border: 2px solid #32b0eb;
+    padding: 20px 30px;
+    overflow-y: auto;
+    box-shadow: 0 0 30px #32b0eb;
+    border-radius: 14px;
+    z-index: 1000;
+    color: #a3c1ff;
+    user-select: text;
+}
+
+.popup-table h3 {
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 700;
+    text-shadow: 0 0 15px #32b0eb;
+}
+
+.popup-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.popup-table th, .popup-table td {
+    border: 1px solid #32b0eb;
+    padding: 12px 18px;
+    text-align: left;
+}
+
+.popup-table th {
+    background-color: #32b0eb;
+    color: #001f3f;
+    font-weight: 700;
+    border-radius: 12px 12px 0 0;
+}
+
+.popup-table tr:nth-child(even) {
+    background-color: #003366;
+}
+
+.popup-table tr:hover {
+    background-color: #004080;
+    color: #cce4ff;
+}
+
+.popup-table a {
+    display: inline-block;
+    margin-top: 15px;
+    color: #32b0eb;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.popup-table a:hover {
+    text-decoration: underline;
+}
+
+/* Close button styling */
+.close-btn {
+    float: right;
+    cursor: pointer;
+    color: #ff4d4d;
+    font-weight: 900;
+    font-size: 1.2rem;
+    user-select: none;
+}
+
+/* Animation for popup text */
+.animated-text {
+    animation: fadeInUp 1.5s ease forwards;
+    opacity: 0;
+    color: #32b0eb;
+    font-weight: 700;
+}
+
+/* Adjust textarea on index page */
+#singleRequirementForm textarea {
+    min-height: 120px;
+    max-width: 600px;
+    font-size: 1.1rem;
+    padding: 15px 20px;
+    border-radius: 14px;
+    box-shadow: inset 2px 2px 12px #274060;
+    background-color: #c4d4ff;
+    color: #001f3f;
+}
+
+/* Style file input for upload */
+#fileUploadForm input[type="file"] {
+    border-radius: 10px;
+    padding: 8px 12px;
+    background-color: #a3c1ff;
+    box-shadow: inset 1px 1px 6px #7892c3;
+    font-weight: 600;
+    color: #001f3f;
+    cursor: pointer;
+}
+
+/* Slight spacing around forms */
+#singleRequirementForm,
+#fileUploadForm {
+    margin-top: 20px;
+}
+
+/* Style for submit buttons on index */
+#singleRequirementForm input[type="submit"],
+#fileUploadForm input[type="submit"] {
+    margin-top: 15px;
+    max-width: 250px;
+    font-weight: 700;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+    .popup-table {
+        top: 5%;
+        left: 5%;
+        width: 90%;
+        max-height: 80%;
+        padding: 15px;
+    }
+
+    #singleRequirementForm textarea {
+        max-width: 100%;
+        font-size: 1rem;
+    }
+
+    #singleRequirementForm input[type="submit"],
+    #fileUploadForm input[type="submit"] {
+        width: 100%;
+        max-width: none;
+    }
+}
+/* Improve Predict form and result styling */
+.predict-form textarea {
+    min-height: 140px;
+    max-width: 600px;
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    padding: 14px 18px;
+    border-radius: 12px;
+    box-shadow: inset 2px 2px 10px #7892c3;
+    resize: vertical;
+    background-color: #c4d4ff;
+    color: #001f3f;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.predict-form textarea:focus {
+    background-color: #e4ebff;
+    box-shadow: 0 0 15px #4a7ed8;
+    outline: none;
+}
+
+.predict-form input[type="submit"] {
+    max-width: 200px;
+    margin: 0 auto 30px auto;
+    display: block;
+}
+
+.prediction-result {
+    background: #1a2e58;
+    border-radius: 14px;
+    padding: 18px 24px;
+    max-width: 700px;
+    margin: 0 auto 30px auto;
+    box-shadow: 0 0 25px #325dbf;
+    color: #d0e3ff;
+    font-size: 1.15rem;
+    text-align: center;
+    user-select: text;
+}
+
+.prediction-result h3 {
+    margin-bottom: 10px;
+    color: #a3c1ff;
+}
+
+/* Upload form tweaks */
+.upload-form input[type="file"] {
+    margin-bottom: 16px;
+    max-width: 400px;
+    width: 100%;
+}
+
+.upload-form input[type="submit"] {
+    max-width: 220px;
+    margin: 0 auto;
+    display: block;
+}
+.prediction-box {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: rgba(0, 38, 77, 0.8);
+    border-left: 6px solid #32b0eb;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #003366;
+    color: #f0f0f0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.prediction-box h3 {
+    margin-bottom: 10px;
+    color: #a3c1ff;
+    font-size: 1.4rem;
+    text-align: center;
+    text-shadow: 0 0 8px #003366;
+}
+
+.prediction-box p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
+}

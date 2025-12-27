@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Requirement Type Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at center, #001f3f 0%, #000c1a 100%);
+            color: #ffffff;
+        }
+
+       nav {
+          width: 100%;
+          max-width: 900px;
+          background: #32b0eb; /* deep midnight purple */
+          padding: 12px 24px;
+          border-radius: 10px;
+          box-shadow: 0 0 15px #3c2a6a; /* subtle purple glow */
+          display: flex;
+          justify-content: center;
+          gap: 30px;
+          position: sticky;
+          top: 0;
+          z-index: 10;
+          backdrop-filter: saturate(180%) blur(12px);
+        }
+
+        nav .nav-links {
+          display: flex;
+          gap: 30px;
+          align-items: center;
+          flex-grow: 1;
+          justify-content: center;
+        }
+
+        nav a {
+          text-decoration: none;
+          font-weight: 600;
+          font-size: 1.1rem;
+          color: #094b5c; /* lighter purple for links */
+          padding: 8px 16px;
+          border-radius: 8px;
+          position: relative;
+          overflow: hidden;
+          letter-spacing: 0.04em;
+          white-space: nowrap;
+        }
+
+        nav a:hover,
+        nav a:focus {
+          color: #32b0eb;
+          background: rgba(0, 38, 77, 0.8); /* brighter purple on hover */
+          box-shadow: 0 0 12px #7c6bff;
+          transform: translateY(-3px);
+        }
+
+        /* New styles for three-dot menu */
+
+        .menu-container {
+          position: relative;
+          margin-left: auto;
+          cursor: pointer;
+          user-select: none;
+        }
+
+        .menu-dots {
+          font-size: 28px;
+          color: #094b5c;
+          padding: 0 10px;
+          display: flex;
+          align-items: center;
+        }
+
+        .menu-dots:hover {
+          color: #32b0eb;
+        }
+
+        .dropdown-menu {
+          display: none;
+          position: absolute;
+          right: 0;
+          top: 35px;
+          background-color: #32b0eb;
+          border-radius: 8px;
+          box-shadow: 0 0 15px #3c2a6a;
+          min-width: 140px;
+          z-index: 20;
+        }
+
+        .dropdown-menu a {
+          display: block;
+          padding: 10px 18px;
+          color: #094b5c;
+          font-weight: 600;
+          border-bottom: 1px solid rgba(9, 75, 92, 0.2);
+        }
+
+        .dropdown-menu a:last-child {
+          border-bottom: none;
+        }
+
+        .dropdown-menu a:hover,
+        .dropdown-menu a:focus {
+          background-color: rgba(0, 38, 77, 0.8);
+          color: #32b0eb;
+        }
+
+        .show-dropdown {
+          display: block;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 800px;
+            margin: 30px auto;
+            background-color: rgba(0, 38, 77, 0.6);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
+        }
+
+        h2, h3 {
+            text-align: center;
+            color: #a8c5ff;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        input[type="submit"], input[type="file"] {
+            display: block;
+            margin: 10px auto 20px;
+            padding: 10px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background-color: #28a9f1;
+            color: white;
+            cursor: pointer;
+        }
+
+        .prediction-box {
+            background-color: #004466;
+            border-left: 6px solid #00bfff;
+            border-right: 6px solid #00bfff;
+            padding: 15px;
+            margin: 40px auto;
+            border-radius: 8px;
+            font-size: 18px;
+            width: 80%;
+            text-align: center;
+        }
+
+        .flash-messages {
+            background-color: #ffcc00;
+            color: #000;
+            padding: 10px;
+            margin: 10px auto;
+            width: fit-content;
+            border-radius: 8px;
+        }
+
+        .popup-table {
+            background-color: rgba(0, 50, 100, 0.95);
+            border: 2px solid #00bfff;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 40px auto;
+            width: 90%;
+            max-width: 900px;
+            color: white;
+        }
+
+        .popup-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .popup-table th, .popup-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #0077b6;
+        }
+
+        .popup-table th {
+            background-color: #28a9f1;
+            color: white;
+            border-radius: 8px;
+        }
+
+        .close-btn {
+            float: right;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        footer.footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('categories') }}">Categories</a>
+            <a href="{{ url_for('contact') }}">Contact</a>
+            <a href="{{ url_for('about') }}">About Us</a>
+            <a href="{{ url_for('faq') }}">FAQ</a>
+            <!-- <a href="{{ url_for('graph') }}">Graph</a> -->
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% endif %}
+        </div>
+
+        {% if not current_user.is_authenticated %}
+            <div class="menu-container" id="menuContainer" tabindex="0" aria-label="User menu">
+                <div class="menu-dots" id="menuDots">&#8942;</div>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="{{ url_for('login') }}">Login</a>
+                    <a href="{{ url_for('signup') }}">Register</a>
+                </div>
+            </div>
+        {% endif %}
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Single Requirement Prediction -->
+        <h2>Predict Single Requirement</h2>
+        <form method="POST" action="{{ url_for('predict') }}">
+            <textarea name="requirement_text" rows="4" placeholder="Type your requirement here..." required></textarea>
+            <input type="submit" value="Predict" />
+        </form>
+
+        {% if prediction %}
+            <div class="prediction-box">
+                <h3>Prediction Result:</h3>
+                <p>{{ prediction }}</p>
+            </div>
+        {% endif %}
+
+        <hr style="margin: 40px 0; border-color: #005577;" />
+
+        <!-- Upload File Section -->
+        <h2>Or Upload File to Categorize Requirements</h2>
+        <form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".csv, .xlsx" required />
+            <input type="submit" value="Upload & Categorize" />
+        </form>
+    </div>
+
+    <!-- Popup Table -->
+    {% if functional and non_functional %}
+        <div class="popup-table" id="popup">
+            <span class="close-btn" onclick="document.getElementById('popup').style.display='none'">✖</span>
+            <h3>Successfully Categorized Requirements</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Functional</th>
+                        <th>Non-Functional</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set max_len = [functional|length, non_functional|length]|max %}
+                    {% for i in range(max_len) %}
+                    <tr>
+                        <td>{{ functional[i] if i < functional|length else '' }}</td>
+                        <td>{{ non_functional[i] if i < non_functional|length else '' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br />
+            <a href="{{ url_for('download') }}" style="color: #00ffff;">⬇️ Download CSV</a>
+        </div>
+        <script>
+            document.getElementById('popup').style.display = 'block';
+        </script>
+    {% endif %}
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Developed by <strong>Zainab</strong> @ 2025</p>
+    </footer>
+
+    <script>
+        const menuContainer = document.getElementById('menuContainer');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        menuContainer?.addEventListener('click', () => {
+            dropdownMenu.classList.toggle('show-dropdown');
+        });
+
+        // Close dropdown if clicked outside
+        document.addEventListener('click', (e) => {
+            if (!menuContainer?.contains(e.target)) {
+                dropdownMenu?.classList.remove('show-dropdown');
+            }
+        });
+
+        // Accessibility: close dropdown on ESC
+        menuContainer?.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                dropdownMenu?.classList.remove('show-dropdown');
+                menuContainer.blur();
+            }
+        });
+    </script>
+</body>
+</html>

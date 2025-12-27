@@ -1,0 +1,22 @@
+{
+  "zainab": {
+    "email": "zaniabsajid12@gmail.com",
+    "password": "scrypt:32768:8:1$xOubPmPnYqKTAPbn$0f5445dcbdc7026aafb38748222a63203033734602d53320a7e8c8c50f9e932ffd7ad2041fe51adf331b1ec70aba284c8ab85cb3ca8b282f113af7190ca3a38f"
+  },
+  "zainab12": {
+    "email": "zainabsajid1218@gmail.com",
+    "password": "scrypt:32768:8:1$bwK1wx60f1zwVIXA$18a7e37fecaf4bc6b2bfc982697001c1b2af913eabc77ad8b8f5804e19f70125d73f325a318880379f2a00681473059219a6f1bc9522ad4c2c275ec25807dd99"
+  },
+  "Samia": {
+    "email": "cm7770768@gmail.com",
+    "password": "scrypt:32768:8:1$a86F7jQRBiaVqVKk$87468f3fc831992edbea88fc7f62c5e24df20e728dce2327233c48fdf2e9544c3edc9a038d8453bf8ed8499109c44217202dc6d5c9301350dc5fbedfe318a943"
+  },
+  "Maryam": {
+    "email": "zainabsajid1218@gmail.com",
+    "password": "scrypt:32768:8:1$mcExdixO3HeqEbej$2dedfe39f56444e94fc96eec4bbc37cd7fcf2fe556942f0fa22497a8defe4d99dbc70192c56a65dd1e8f27e39c2a609c2a0ef25e728b66b28744303a25fcfdef"
+  },
+  "hadia": {
+    "email": "chillim024@gmail.com",
+    "password": "scrypt:32768:8:1$iNVnaE2YTZsbYZb0$622ecfb2a16001e5d60a51314f6515b01551c702605631a7fc7c56a9a037013e3df475812c39592eb8efc2fd38aaebb886d61739e70a39ae6ec99e7f9d32be6b"
+  }
+}

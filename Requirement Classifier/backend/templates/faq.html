@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>FAQ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <style>
+        /* Reset & base */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at center, #001f3f 0%, #000c1a 100%);
+            color: #a8c5ff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Navbar */
+        nav {
+            width: 100%;
+            max-width: 900px;
+            background: #32b0eb;
+            padding: 12px 24px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #3c2a6a;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: saturate(180%) blur(12px);
+            margin: 20px auto 40px;
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            flex-grow: 1;
+            justify-content: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #094b5c;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        nav a:hover,
+        nav a:focus {
+            color: #32b0eb;
+            background: rgba(0, 38, 77, 0.8);
+            box-shadow: 0 0 12px #7c6bff;
+            transform: translateY(-3px);
+        }
+
+        /* Dropdown menu styles */
+        .menu-container {
+            position: relative;
+            margin-left: auto;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .menu-dots {
+            font-size: 28px;
+            color: #094b5c;
+            padding: 0 10px;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .menu-dots:hover {
+            color: #a8c5ff;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 35px;
+            background-color: #1e2a5a;
+            border-radius: 8px;
+            box-shadow: 0 0 15px #3c2a6a;
+            min-width: 140px;
+            z-index: 20;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 18px;
+            color: #a8c5ff;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(168, 197, 255, 0.2);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a:hover,
+        .dropdown-menu a:focus {
+            background-color: #32b0eb;
+            color: #001f3f;
+        }
+
+        .show-dropdown {
+            display: block;
+        }
+
+        /* Container */
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background-color: rgba(0, 38, 77, 0.75);
+            border-radius: 12px;
+            padding: 30px 25px;
+            margin-bottom: 60px;
+            box-shadow: 0 0 25px rgba(0, 191, 255, 0.3);
+            color: white;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 24px;
+            color: #a8c5ff;
+            font-weight: 700;
+            font-size: 2rem;
+        }
+
+        /* FAQ styles */
+        .faq-item {
+            border-bottom: 1px solid rgba(168, 197, 255, 0.3);
+            padding: 15px 0;
+        }
+
+        .faq-question {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #7c6bff;
+            cursor: pointer;
+            margin-bottom: 8px;
+            user-select: none;
+            transition: color 0.3s ease;
+        }
+
+        .faq-question:hover,
+        .faq-question:focus {
+            color: #32b0eb;
+            outline: none;
+        }
+
+        .faq-answer {
+            font-size: 1rem;
+            color: #cfd8ff;
+            margin-left: 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+            padding-left: 4px;
+        }
+
+        .faq-answer.show {
+            max-height: 500px; /* large enough for answers */
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-links">
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('categories') }}">Categories</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('about') }}">About Us</a>
+        <a href="{{ url_for('faq') }}">FAQ</a>
+        <!-- <a href="{{ url_for('graph') }}">Graph</a> -->
+    </div>
+
+    {% if current_user.is_authenticated %}
+        <div class="menu-container" tabindex="0" aria-label="User menu">
+            <div class="menu-dots">&#8942;</div>
+            <div class="dropdown-menu">
+                <a href="{{ url_for('logout') }}">Logout</a>
+            </div>
+        </div>
+    {% else %}
+        <div class="menu-container" id="menuContainer" tabindex="0" aria-label="User menu">
+            <div class="menu-dots" id="menuDots">&#8942;</div>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('signup') }}">Register</a>
+            </div>
+        </div>
+    {% endif %}
+</nav>
+
+<div class="container">
+    <h1>Frequently Asked Questions</h1>
+    
+    {% if faqs and faqs|length > 0 %}
+        {% for faq in faqs %}
+        <div class="faq-item">
+            <div class="faq-question" tabindex="0">{{ faq.question }}</div>
+            <div class="faq-answer">{{ faq.answer | safe }}</div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No FAQs available at the moment. Please check back later.</p>
+    {% endif %}
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const questions = document.querySelectorAll('.faq-question');
+        questions.forEach(q => {
+            q.addEventListener('click', () => {
+                const answer = q.nextElementSibling;
+                answer.classList.toggle('show');
+            });
+            // allow keyboard toggling with Enter or Space
+            q.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    q.click();
+                }
+            });
+        });
+
+        // Dropdown menu toggle
+        const menuContainer = document.getElementById('menuContainer');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        menuContainer?.addEventListener('click', () => {
+            dropdownMenu.classList.toggle('show-dropdown');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!menuContainer?.contains(e.target)) {
+                dropdownMenu?.classList.remove('show-dropdown');
+            }
+        });
+
+        menuContainer?.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                dropdownMenu?.classList.remove('show-dropdown');
+                menuContainer.blur();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

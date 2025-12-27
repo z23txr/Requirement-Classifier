@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Requirement History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at center, #001f3f 0%, #000c1a 100%);
+            color: #fff;
+        }
+
+        nav {
+            width: 100%;
+            max-width: 900px;
+            background: #32b0eb;
+            padding: 12px 24px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #3c2a6a;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: saturate(180%) blur(12px);
+            margin: 20px auto 40px;
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            flex-grow: 1;
+            justify-content: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #094b5c;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        nav a:hover,
+        nav a:focus {
+            color: #32b0eb;
+            background: rgba(0, 38, 77, 0.8);
+            box-shadow: 0 0 12px #7c6bff;
+            transform: translateY(-3px);
+        }
+
+        /* Three-dot menu styles */
+        .menu-container {
+            position: relative;
+            margin-left: auto;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .menu-dots {
+            font-size: 28px;
+            color: #094b5c;
+            padding: 0 10px;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .menu-dots:hover {
+            color: #a8c5ff;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 35px;
+            background-color: #1e2a5a;
+            border-radius: 8px;
+            box-shadow: 0 0 15px #3c2a6a;
+            min-width: 140px;
+            z-index: 20;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 18px;
+            color: #a8c5ff;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(168, 197, 255, 0.2);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a:hover,
+        .dropdown-menu a:focus {
+            background-color: #32b0eb;
+            color: #001f3f;
+        }
+
+        .show-dropdown {
+            display: block;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 900px;
+            margin: 0 auto 60px;
+            background-color: rgba(0, 38, 77, 0.7);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
+        }
+
+        h2 {
+            text-align: center;
+            color: #a8c5ff;
+            margin-bottom: 30px;
+        }
+
+        /* Button container below table */
+        .download-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            color: white;
+            border-radius: 15px;
+            overflow: hidden; /* clips the rounded corners */
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #0077b6;
+        }
+
+        /* Remove side borders on all th */
+        th {
+            background-color: #28a9f1;
+            color: white;
+            border-left: none;
+            border-right: none;
+        }
+
+        /* First th: round all left corners + left border */
+        thead tr th:first-child {
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+            border-left: 1px solid #0077b6;
+        }
+
+        /* Last th: round all right corners + right border */
+        thead tr th:last-child {
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
+            border-right: 1px solid #0077b6;
+        }
+
+        .btn-danger {
+            background-color: #ff4d4d;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .btn-danger:hover {
+            background-color: #cc0000;
+        }
+
+        .alert-info {
+            background-color: #005577;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .alert-dismissible {
+            margin-bottom: 20px;
+        }
+
+        .btn-close {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: white;
+            float: right;
+            cursor: pointer;
+        }
+
+        footer.footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('categories') }}">Categories</a>
+            <a href="{{ url_for('contact') }}">Contact</a>
+            <a href="{{ url_for('about') }}">About Us</a>
+            <a href="{{ url_for('faq') }}">FAQ</a>
+            <!-- <a href="{{ url_for('graph') }}">Graph</a> -->
+        </div>
+
+        {% if current_user.is_authenticated %}
+            <div class="menu-container" tabindex="0" aria-label="User menu">
+                <div class="menu-dots">&#8942;</div>
+                <div class="dropdown-menu">
+                    <a href="{{ url_for('logout') }}">Logout</a>
+                </div>
+            </div>
+        {% else %}
+            <div class="menu-container" id="menuContainer" tabindex="0" aria-label="User menu">
+                <div class="menu-dots" id="menuDots">&#8942;</div>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="{{ url_for('login') }}">Login</a>
+                    <a href="{{ url_for('signup') }}">Register</a>
+                </div>
+            </div>
+        {% endif %}
+    </nav>
+
+    <!-- Main History Container -->
+    <div class="container">
+        <h2>Prediction History</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }} alert-dismissible">
+                {{ message }}
+                <button type="button" class="btn-close" aria-label="Close">&times;</button>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        {% if history %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Requirement</th>
+                        <th>Prediction</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in history %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ item.requirement }}</td>
+                        <td>{{ item.prediction }}</td>
+                        <td>
+                            <form method="post" action="{{ url_for('delete_history_item', index=loop.index0) }}">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="download-container">
+                <button id="download-btn" class="btn btn-danger">Download History CSV</button>
+            </div>
+        {% else %}
+            <div class="alert-info">No history yet.</div>
+        {% endif %}
+    </div>
+
+<script>
+    // Dropdown toggle for menu
+    const menuContainer = document.getElementById('menuContainer');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    menuContainer?.addEventListener('click', () => {
+        dropdownMenu.classList.toggle('show-dropdown');
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!menuContainer?.contains(e.target)) {
+            dropdownMenu?.classList.remove('show-dropdown');
+        }
+    });
+
+    menuContainer?.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            dropdownMenu?.classList.remove('show-dropdown');
+            menuContainer.blur();
+        }
+    });
+
+    // Close alert messages on close button click
+    document.querySelectorAll('.btn-close').forEach(btn => {
+        btn.addEventListener('click', () => {
+            btn.parentElement.style.display = 'none';
+        });
+    });
+
+    // CSV download button logic
+    document.getElementById('download-btn')?.addEventListener('click', function() {
+        const rows = document.querySelectorAll('table tbody tr');
+        if(rows.length === 0) {
+          alert('No history to download.');
+          return;
+        }
+
+        const headers = Array.from(document.querySelectorAll('table thead th'))
+                             .slice(0, -1)
+                             .map(th => th.innerText.trim());
+
+        const csvData = [];
+        csvData.push(headers.join(','));
+
+        rows.forEach(row => {
+          const cells = Array.from(row.querySelectorAll('td'))
+                             .slice(0, -1)
+                             .map(td => {
+            let text = td.innerText.trim();
+            if(text.includes('"')) {
+              text = text.replace(/"/g, '""');
+            }
+            if(text.includes(',') || text.includes('"') || text.includes('\n')) {
+              text = `"${text}"`;
+            }
+            return text;
+          });
+          csvData.push(cells.join(','));
+        });
+
+        const csvString = csvData.join('\n');
+        const blob = new Blob([csvString], {type: 'text/csv'});
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'history.csv';
+        document.body.appendChild(a);
+        a.click();
+
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
+</script>
+
+</body>
+</html>

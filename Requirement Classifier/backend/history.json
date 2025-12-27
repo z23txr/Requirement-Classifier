@@ -1,0 +1,154 @@
+[
+  {
+    "requirement": "the system should allow user to track their order",
+    "prediction": "FR"
+  },
+  {
+    "requirement": "User can register an account",
+    "prediction": "FR"
+  },
+  {
+    "requirement": "System should respond within 2 seconds",
+    "prediction": "NFR"
+  },
+  {
+    "requirement": "Users can reset their passwords via email",
+    "prediction": "FR"
+  },
+  {
+    "requirement": "The application must be available 99.9% of the time",
+    "prediction": "NFR"
+  },
+  {
+    "requirement": "System logs all user activity for audit purposes",
+    "prediction": "NFR"
+  },
+  {
+    "requirement": "The system must respond to user requests within 2 seconds under normal load conditions",
+    "prediction": "NFR"
+  },
+  {
+    "requirement": "The application must support creating, editing, and deleting user profiles.",
+    "prediction": "NFR"
+  },
+  {
+    "requirement": "Users shall be able to search for products using keywords and filters.",
+    "prediction": "FR"
+  },
+  {
+    "requirement": "he system must respond to user requests within 2 seconds under normal load conditions.",
+    "prediction": "NFR"
+  },
+  {
+    "requirement": "The system shall allow users to reset their password via email verification.",
+    "prediction": "FR"
+  },
+  {
+    "requirement": "The system must respond to user requests within 2 seconds under normal load conditions",
+    "prediction": "NFR"
+  },
+  {
+    "requirement": "The application must support creating, editing, and deleting user profiles.",
+    "prediction": "NFR"
+  },
+  {
+    "requirement": "Users shall be able to search for products using keywords and filters.",
+    "prediction": "FR"
+  },
+  {
+    "requirement": "he system must respond to user requests within 2 seconds under normal load conditions.",
+    "prediction": "NFR"
+  },
+  {
+    "requirement": "The system shall allow users to reset their password via email verification.",
+    "prediction": "FR"
+  },
+  {
+    "requirement": "the system should be clean",
+    "prediction": "NFR"
+  },
+  {
+    "requirement": "the system should allow user to view their history",
+    "prediction": "FR"
+  },
+  {
+    "requirement": "he application shall enable users to upload profile pictures.",
+    "prediction": "FR"
+  },
+  {
+    "requirement": "The system shall allow users to log in using their email and password.",
+    "prediction": "FR"
+  },
+  {
+    "requirement": "The application shall generate monthly sales reports automatically.",
+    "prediction": "FR"
+  },
+  {
+    "requirement": "The system shall allow users to log in using their email and password.",
+    "prediction": "FR"
+  },
+  {
+    "requirement": "The system should allow user to track their order",
+    "prediction": "FR"
+  },
+  {
+    "requirement": "the system should be easy to use",
+    "prediction": "NFR"
+  },
+  {
+    "requirement": "the system should be secure",
+    "prediction": "NFR"
+  },
+  {
+    "requirement": "The system shall allow users to log in using their email and password.",
+    "prediction": "FR"
+  },
+  {
+    "requirement": "system should let me login my account",
+    "prediction": "NFR"
+  },
+  {
+    "requirement": "The system shall allow users to log in using their email and password.",
+    "prediction": "FR"
+  },
+  {
+    "requirement": "the system should be easy",
+    "prediction": "NFR"
+  },
+  {
+    "requirement": "The system shall allow users to log in using their email and password.",
+    "prediction": "FR"
+  },
+  {
+    "requirement": "the system should be secure",
+    "prediction": "NFR"
+  },
+  {
+    "requirement": "The system shall allow users to log in using their email and password.",
+    "prediction": "FR"
+  },
+  {
+    "requirement": "the system should be easy",
+    "prediction": "NFR"
+  },
+  {
+    "requirement": "The system shall allow users to log in using their email and password.",
+    "prediction": "FR"
+  },
+  {
+    "requirement": "the system should be secure",
+    "prediction": "NFR"
+  },
+  {
+    "requirement": "The system shall allow users to log in using their email and password.",
+    "prediction": "FR"
+  },
+  {
+    "requirement": "The system shall respond to user login requests within 2 seconds under normal load conditions.",
+    "prediction": "NFR"
+  },
+  {
+    "requirement": "the system should be easy to use",
+    "prediction": "NFR"
+  }
+]

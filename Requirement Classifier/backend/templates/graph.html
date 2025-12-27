@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Graph</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background-color: #343a40;
+            padding: 1em;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 1em;
+            padding: 0.5em 1em;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #495057;
+        }
+        .container {
+            padding: 2em;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 1em;
+            color: #343a40;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('categories') }}">Categories</a>
+    <a href="{{ url_for('contact') }}">Contact</a>
+    <a href="{{ url_for('about') }}">About Us</a>
+    <a href="{{ url_for('faq') }}">FAQ</a>
+    <!-- <a href="{{ url_for('graph') }}">Graph</a> -->
+    {% if current_user.is_authenticated %}
+        <a href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('signup') }}">Register</a>
+    {% endif %}
+</nav>
+
+<div class="container">
+    <h1>Requirement Types Distribution</h1>
+    <canvas id="requirementChart" width="400" height="300"></canvas>
+</div>
+
+<script>
+    const ctx = document.getElementById('requirementChart').getContext('2d');
+    const data = {
+        labels: {{ labels|tojson }},
+        datasets: [{
+            label: 'Requirement Percentage',
+            data: {{ values|tojson }},
+            backgroundColor: [
+                'rgba(40, 167, 69, 0.7)',  // Green for functional
+                'rgba(220, 53, 69, 0.7)'   // Red for non-functional
+            ],
+            borderColor: [
+                'rgba(40, 167, 69, 1)',
+                'rgba(220, 53, 69, 1)'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    const config = {
+        type: 'bar',
+        data: data,
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                        stepSize: 10,
+                        callback: function(value) {
+                            return value + "%";
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Percentage'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Requirement Type'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.parsed.y + '%';
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    new Chart(ctx, config);
+</script>
+</body>
+</html>

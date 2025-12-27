@@ -1,0 +1,3 @@
+requirement,prediction
+The system shall allow users to log in using their email and password.,FR
+The system shall respond to user login requests within 2 seconds under normal load conditions.,NFR
